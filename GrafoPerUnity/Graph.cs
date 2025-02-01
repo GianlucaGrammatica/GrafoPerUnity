@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace GrafoPerUnity
 {
@@ -10,22 +11,32 @@ namespace GrafoPerUnity
     {
         public int VerticesNumber { get; set; }
         private int[,] BaseMatrix;
+        private List<Node> Grafo;
+
+        public Node FirstNode;
+        public Node LastNode;
 
         private Random random;
 
         // Costruttore
         public Graph(int vertices) {
-            VerticesNumber = vertices;
 
+            VerticesNumber = vertices;
             BaseMatrix = new int[VerticesNumber, VerticesNumber];
+            
 
             for(int i = 0; i < VerticesNumber; i++)
             {
+                Grafo.Add(new Node());
+
                 for(int j = 0; j < VerticesNumber; j++)
                 {
                     BaseMatrix[i, j] = 0;
                 }
             }
+
+            FirstNode = Grafo[0];
+            LastNode = Grafo[VerticesNumber];
 
             random = new Random();
         }
