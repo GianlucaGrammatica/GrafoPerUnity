@@ -42,6 +42,21 @@ namespace GrafoPerUnity
             }
         }
 
+        public void AddEdge(int Vertex1, int Vertex2)
+        {
+            if(isValidVertex(Vertex1) && isValidVertex(Vertex2))
+            {
+                this.BaseMatrix[Vertex1, Vertex2] = 1;
+                this.BaseMatrix[Vertex2, Vertex1] = 1;
+            }
+        }
+
+
+        private bool isValidVertex(int Vertex)
+        {
+            return (Vertex > 0 && Vertex < this.VerticesNumber);
+        }
+
 
     }
 }
