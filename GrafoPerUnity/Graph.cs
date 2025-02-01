@@ -13,6 +13,7 @@ namespace GrafoPerUnity
 
         private Random random;
 
+        // Costruttore
         public Graph(int vertices) {
             VerticesNumber = vertices;
 
@@ -29,6 +30,7 @@ namespace GrafoPerUnity
             random = new Random();
         }
 
+        // Matrice Casuale
         public void GeneraDiBase()
         {
             for (int i = 0; i < VerticesNumber; i++)
@@ -42,6 +44,7 @@ namespace GrafoPerUnity
             }
         }
 
+        // Aggiunta
         public void AddEdge(int Vertex1, int Vertex2)
         {
             if(isValidVertex(Vertex1) && isValidVertex(Vertex2))
@@ -51,12 +54,21 @@ namespace GrafoPerUnity
             }
         }
 
+        // Rimozione
+        public void RemoveEdge(int Vertex1, int Vertex2)
+        {
+            if (isValidVertex(Vertex1) && isValidVertex(Vertex2))
+            {
+                this.BaseMatrix[Vertex1, Vertex2] = 0;
+                this.BaseMatrix[Vertex2, Vertex1] = 0;
+            }
+        }
 
+
+        // Validazione
         private bool isValidVertex(int Vertex)
         {
             return (Vertex > 0 && Vertex < this.VerticesNumber);
         }
-
-
     }
 }
