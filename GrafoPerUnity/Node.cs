@@ -8,5 +8,6 @@ namespace GrafoPerUnity
 {
     internal class Node
     {
+        public Node() { }
     }
 }
