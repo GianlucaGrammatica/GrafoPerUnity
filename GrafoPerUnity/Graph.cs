@@ -38,7 +38,6 @@ namespace GrafoPerUnity
                 for (int j = 0; j < VerticesNumber; j++)
                 {
                     BaseMatrix[i, j] = random.NextDouble() < 0.5? 1: 0;
-
                     BaseMatrix[j, i] = BaseMatrix[i, j];
                 }
             }
@@ -70,5 +69,19 @@ namespace GrafoPerUnity
         {
             return (Vertex > 0 && Vertex < this.VerticesNumber);
         }
+
+        // Stampa della matrice
+        public void Stampa()
+        {
+            for (int i = 0; i < VerticesNumber; i++)
+            {
+                for (int j = 0; j < VerticesNumber; j++)
+                {
+                    Console.Write(BaseMatrix[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }
