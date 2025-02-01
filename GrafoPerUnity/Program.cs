@@ -10,7 +10,7 @@ namespace GrafoPerUnity
     {
         static void Main(string[] args)
         {
-            Graph graph = new Graph(7);
+            Graph graph = new Graph(3);
             graph.GeneraDiBase();
             graph.Stampa();
             Console.ReadKey();
