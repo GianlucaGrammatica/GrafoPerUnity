@@ -27,7 +27,7 @@ namespace GrafoPerUnity
 
             for(int i = 0; i < VerticesNumber; i++)
             {
-                Grafo.Add(new Node());
+                //Grafo.Add(new Node());
 
                 for(int j = 0; j < VerticesNumber; j++)
                 {
@@ -35,21 +35,43 @@ namespace GrafoPerUnity
                 }
             }
 
-            FirstNode = Grafo[0];
-            LastNode = Grafo[VerticesNumber];
+            //FirstNode = Grafo[0];
+            //LastNode = Grafo[VerticesNumber];
 
             random = new Random();
         }
 
         // Matrice Casuale
-        public void GeneraDiBase()
+        public void GenerateMatrix()
         {
+            int[] connections = new int[VerticesNumber];
+
             for (int i = 0; i < VerticesNumber; i++)
             {
                 for (int j = 0; j < VerticesNumber; j++)
                 {
-                    BaseMatrix[i, j] = random.NextDouble() < 0.5? 1: 0;
-                    BaseMatrix[j, i] = BaseMatrix[i, j];
+                    // Salta collegamento tra inizio e fine
+                    if(i == 0 && j == VerticesNumber - 1)
+                    {
+                        continue;
+                    }
+
+                    // Salta collegamento a se stesso
+                    if (i == j)
+                    {
+                        continue;
+                    }
+
+                    // Controlla se non ci sono troppe connessioni e genera casualmente 0 o 1 -> se 1 inserisci
+                    if (connections[i] < 4 && connections[j] < 4 && random.NextDouble() < 0.5)
+                    {
+                        BaseMatrix[i, j] = 1;
+                        BaseMatrix[j, i] = 1;
+
+                        // Aumento counter connessioni
+                        connections[i]++;
+                        connections[j]++;
+                    }
                 }
             }
         }
@@ -78,7 +100,7 @@ namespace GrafoPerUnity
         // Validazione
         private bool isValidVertex(int Vertex)
         {
-            return (Vertex > 0 && Vertex < this.VerticesNumber);
+            return (Vertex >= 0 && Vertex < this.VerticesNumber);
         }
 
         // Stampa della matrice
