@@ -74,7 +74,73 @@ namespace GrafoPerUnity
                     }
                 }
             }
+
+            if(CountPaths(0, VerticesNumber-1) < 2)
+            {
+                AddRandomEdge(random.Next(1, 3));
+            }
         }
+
+        // Calcolo numero strade possibili
+        public int CountPaths(int start, int end)
+        {
+            bool[] visited = new bool[VerticesNumber];
+            int pathCount = 0;
+
+            DFS(start, end, visited, ref pathCount);
+            return pathCount;
+        }
+
+        // DFS
+        private void DFS(int node, int end, bool[] visited, ref int pathCount)
+        {
+            // Ha trovato una strada
+            if (node == end)
+            {
+                pathCount++;
+                return;
+            }
+
+            visited[node] = true;
+
+            for (int i = 0; i < VerticesNumber; i++)
+            {
+                if (BaseMatrix[node, i] == 1 && !visited[i])
+                {
+                    // Nodo successivo
+                    DFS(i, end, visited, ref pathCount);
+                }
+            }
+
+            // Mette a false per altre strade
+            visited[node] = false;
+        }
+
+        // Aggiunta Coollegamneti casuali
+        public void AddRandomEdge(int count)
+        {
+            int edgesAdded = 0;
+
+            while (edgesAdded < count)
+            {
+                int node1 = random.Next(1, VerticesNumber - 1);
+                int node2 = random.Next(1, VerticesNumber - 1);
+
+                // Evita auto-collegamenti
+                while (node1 == node2)
+                {
+                    node2 = random.Next(1, VerticesNumber - 1);
+                }
+
+                // Se i nodi non sono già collegati, aggiungi il collegamento
+                if (BaseMatrix[node1, node2] == 0)
+                {
+                    AddEdge(node1, node2);
+                    edgesAdded++;
+                }
+            }
+        }
+
 
         // Aggiunta
         public void AddEdge(int Vertex1, int Vertex2)
