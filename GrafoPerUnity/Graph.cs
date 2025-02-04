@@ -193,17 +193,19 @@ namespace GrafoPerUnity
         creare i e b, che non si colleghino, fai il dijkstra
         la lista dei nodi, sarà una list, sarà all
 
-
         NodiChiusi, lista dei nodi, al''inizio tutti sono chiusi
         NodiScoperti, lista di nodi che hanno dei collegamenti
         per generare il percorso che porta dall'inizio alla fine random
-
         dall'inizio, va avanti e trova tutti quelli che sono adiacenti al percorso e quando cercando trova che il nodo è presente dentro nodi scoperti 
         va e lo ferma, cosi che c'è un vicolo cieco
-
         quando inizia a cercare 
         dopo che trova i percorsi arancioni cerca, i successivi a quelli che non portano da nessuna parte 
         è una funzione ricorsiva affinche non ci sono piu nodi da scoprire
+
+        seconda opzione:
+        ogni nodo è una stanza che è uguale
+        piu di 12 13 nodi se nodi 
+        con almeno 
         */
     }
 }
