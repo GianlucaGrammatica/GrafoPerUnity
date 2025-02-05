@@ -83,11 +83,11 @@ namespace GrafoPerUnity
             }
         }
         // nella matrice segnero che 00 e nn sono i finali e iniziali quindi 
-        //ci saranno n-2 nodi che creero
+        // ci saranno n-2 nodi che creero
 
         /*
-         inizio e fine non possono essere direttamente collegati
-        non posso avere due porte che portano allo stesso posto, gli archi detti N12 devono essere univoci, quindi nell’inserimento guardo metà della matrice di adiacenza  perché speculare sulla diagonale
+        inizio e fine non possono essere direttamente collegati
+        non posso avere due porte che portano allo stesso posto, gli archi detti N12 dzevono essere univoci, quindi nell’inserimento guardo metà della matrice di adiacenza  perché speculare sulla diagonale
         dev’esserci più di un percorso possibile che porti allo stesso posto
         la differenza tra i vari percorsi dev’essere minore di 3, la differenza maggiore e il minore deve essere maggiore di 3
         per il maggiore tolgo i noti
