@@ -11,7 +11,7 @@ namespace GrafoPerUnity
     {
         public int VerticesNumber { get; set; }
         private int[,] BaseMatrix;
-        private List<Node> Grafo;
+        private List<Node> Grafo = new List<Node>();
 
         public Node FirstNode;
         public Node LastNode;
@@ -27,7 +27,8 @@ namespace GrafoPerUnity
 
             for(int i = 0; i < VerticesNumber; i++)
             {
-                //Grafo.Add(new Node());
+                Node nodo = new Node(i);
+                Grafo.Add(nodo);
 
                 for(int j = 0; j < VerticesNumber; j++)
                 {
@@ -35,8 +36,8 @@ namespace GrafoPerUnity
                 }
             }
 
-            //FirstNode = Grafo[0];
-            //LastNode = Grafo[VerticesNumber];
+            FirstNode = Grafo[0];
+            LastNode = Grafo[VerticesNumber-1];
 
             random = new Random();
         }
@@ -63,7 +64,7 @@ namespace GrafoPerUnity
                     }
 
                     // Controlla se non ci sono troppe connessioni e genera casualmente 0 o 1 -> se 1 inserisci
-                    if (connections[i] < 4 && connections[j] < 4 && random.NextDouble() < 0.5)
+                    if (connections[i] < 4 && connections[j] < 4 && random.NextDouble() < 0.15)
                     {
                         BaseMatrix[i, j] = 1;
                         BaseMatrix[j, i] = 1;
@@ -179,6 +180,23 @@ namespace GrafoPerUnity
                     Console.Write(BaseMatrix[i, j] + " ");
                 }
                 Console.WriteLine();
+            }
+        }
+
+        private void PopulateList()
+        {
+            for (int i = 0; i < VerticesNumber; i++)
+            {
+                Node nodo = new Node(i);
+                int count = 0;
+                for (int j = 0; j < VerticesNumber; j++)
+                {
+                    if (BaseMatrix[i, j] != 0)
+                    {
+                        nodo.nodes[count] = Grafo[j];
+                        count++;
+                    }
+                }
             }
         }
         // nella matrice segnero che 00 e nn sono i finali e iniziali quindi 

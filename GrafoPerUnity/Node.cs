@@ -8,6 +8,12 @@ namespace GrafoPerUnity
 {
     internal class Node
     {
-        public Node() { }
+        public int ID;
+        public Node[] nodes = new Node[4] {null,null,null,null};
+
+        public Node(int id) {
+            ID = id;
+
+        }
     }
 }
