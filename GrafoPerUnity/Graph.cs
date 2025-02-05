@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace GrafoPerUnity
 {
@@ -10,38 +11,136 @@ namespace GrafoPerUnity
     {
         public int VerticesNumber { get; set; }
         private int[,] BaseMatrix;
+        private List<Node> Grafo;
+
+        public Node FirstNode;
+        public Node LastNode;
 
         private Random random;
 
         // Costruttore
         public Graph(int vertices) {
-            VerticesNumber = vertices;
 
+            VerticesNumber = vertices;
             BaseMatrix = new int[VerticesNumber, VerticesNumber];
+            
 
             for(int i = 0; i < VerticesNumber; i++)
             {
+                //Grafo.Add(new Node());
+
                 for(int j = 0; j < VerticesNumber; j++)
                 {
                     BaseMatrix[i, j] = 0;
                 }
             }
 
+            //FirstNode = Grafo[0];
+            //LastNode = Grafo[VerticesNumber];
+
             random = new Random();
         }
 
         // Matrice Casuale
-        public void GeneraDiBase()
+        public void GenerateMatrix()
         {
+            int[] connections = new int[VerticesNumber];
+
             for (int i = 0; i < VerticesNumber; i++)
             {
                 for (int j = 0; j < VerticesNumber; j++)
                 {
-                    BaseMatrix[i, j] = random.NextDouble() < 0.5? 1: 0;
-                    BaseMatrix[j, i] = BaseMatrix[i, j];
+                    // Salta collegamento tra inizio e fine
+                    if(i == 0 && j == VerticesNumber - 1)
+                    {
+                        continue;
+                    }
+
+                    // Salta collegamento a se stesso
+                    if (i == j)
+                    {
+                        continue;
+                    }
+
+                    // Controlla se non ci sono troppe connessioni e genera casualmente 0 o 1 -> se 1 inserisci
+                    if (connections[i] < 4 && connections[j] < 4 && random.NextDouble() < 0.5)
+                    {
+                        BaseMatrix[i, j] = 1;
+                        BaseMatrix[j, i] = 1;
+
+                        // Aumento counter connessioni
+                        connections[i]++;
+                        connections[j]++;
+                    }
+                }
+            }
+
+            if(CountPaths(0, VerticesNumber-1) < 2)
+            {
+                AddRandomEdge(random.Next(1, 3));
+            }
+        }
+
+        // Calcolo numero strade possibili
+        public int CountPaths(int start, int end)
+        {
+            bool[] visited = new bool[VerticesNumber];
+            int pathCount = 0;
+
+            DFS(start, end, visited, ref pathCount);
+            return pathCount;
+        }
+
+        // DFS
+        private void DFS(int node, int end, bool[] visited, ref int pathCount)
+        {
+            // Ha trovato una strada
+            if (node == end)
+            {
+                pathCount++;
+                return;
+            }
+
+            visited[node] = true;
+
+            for (int i = 0; i < VerticesNumber; i++)
+            {
+                if (BaseMatrix[node, i] == 1 && !visited[i])
+                {
+                    // Nodo successivo
+                    DFS(i, end, visited, ref pathCount);
+                }
+            }
+
+            // Mette a false per altre strade
+            visited[node] = false;
+        }
+
+        // Aggiunta Coollegamneti casuali
+        public void AddRandomEdge(int count)
+        {
+            int edgesAdded = 0;
+
+            while (edgesAdded < count)
+            {
+                int node1 = random.Next(1, VerticesNumber - 1);
+                int node2 = random.Next(1, VerticesNumber - 1);
+
+                // Evita auto-collegamenti
+                while (node1 == node2)
+                {
+                    node2 = random.Next(1, VerticesNumber - 1);
+                }
+
+                // Se i nodi non sono già collegati, aggiungi il collegamento
+                if (BaseMatrix[node1, node2] == 0)
+                {
+                    AddEdge(node1, node2);
+                    edgesAdded++;
                 }
             }
         }
+
 
         // Aggiunta
         public void AddEdge(int Vertex1, int Vertex2)
@@ -67,7 +166,7 @@ namespace GrafoPerUnity
         // Validazione
         private bool isValidVertex(int Vertex)
         {
-            return (Vertex > 0 && Vertex < this.VerticesNumber);
+            return (Vertex >= 0 && Vertex < this.VerticesNumber);
         }
 
         // Stampa della matrice
@@ -94,6 +193,19 @@ namespace GrafoPerUnity
         creare i e b, che non si colleghino, fai il dijkstra
         la lista dei nodi, sarà una list, sarà all
 
+        NodiChiusi, lista dei nodi, al''inizio tutti sono chiusi
+        NodiScoperti, lista di nodi che hanno dei collegamenti
+        per generare il percorso che porta dall'inizio alla fine random
+        dall'inizio, va avanti e trova tutti quelli che sono adiacenti al percorso e quando cercando trova che il nodo è presente dentro nodi scoperti 
+        va e lo ferma, cosi che c'è un vicolo cieco
+        quando inizia a cercare 
+        dopo che trova i percorsi arancioni cerca, i successivi a quelli che non portano da nessuna parte 
+        è una funzione ricorsiva affinche non ci sono piu nodi da scoprire
+
+        seconda opzione:
+        ogni nodo è una stanza che è uguale
+        piu di 12 13 nodi se nodi 
+        con almeno 
         */
     }
 }
