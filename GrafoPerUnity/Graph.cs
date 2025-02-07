@@ -193,12 +193,66 @@ namespace GrafoPerUnity
                 {
                     if (BaseMatrix[i, j] != 0)
                     {
+                        checkDoors(ref count, nodo, Grafo[j]);
                         nodo.nodes[count] = Grafo[j];
                         count++;
                     }
                 }
             }
         }
+
+        private void checkDoors(ref int count, Node me, Node them) //me è il nodo in cui mi trovo, them è quello di cui guardo collegato 
+        {
+            int[] arrayOpposite = {2,3,0,1};
+            //la cella che è opposta è vuota, quindi non cambio nulla
+            if (them.nodes[arrayOpposite[count]] == null) return;
+            else
+            {
+                count++;
+                checkDoors(ref count, me, them);
+            }
+        }
+
+        public void TestGraph()
+        {
+            // Creazione di un grafo con 6 nodi
+            Graph graph = new Graph(6);
+
+            // Generazione della matrice di adiacenza con probabilità casuali di connessione
+            graph.GenerateMatrix();
+
+            // Stampa della matrice per visualizzare le connessioni
+            Console.WriteLine("Matrice di Adiacenza:");
+            graph.Stampa();
+
+            // Verifica la presenza di almeno due percorsi tra il nodo 0 e il nodo 5
+            int paths = graph.CountPaths(0, 5);
+            Console.WriteLine($"Numero di percorsi da 0 a 5: {paths}");
+
+            // Verifica che i nodi siano connessi (stampa la matrice delle connessioni)
+            Console.WriteLine("Test di connessione tra nodi:");
+            for (int i = 0; i < graph.VerticesNumber; i++)
+            {
+                for (int j = 0; j < graph.VerticesNumber; j++)
+                {
+                    if (graph.BaseMatrix[i, j] == 1)
+                    {
+                        Console.WriteLine($"Nodo {i} è connesso a Nodo {j}");
+                    }
+                }
+            }
+
+            // Test aggiunta di un nuovo collegamento tra due nodi
+            Console.WriteLine("\nAggiunta di un collegamento tra il Nodo 1 e il Nodo 4...");
+            graph.AddEdge(1, 4);
+            graph.Stampa(); // Mostra la matrice aggiornata
+
+            // Test rimozione di un collegamento tra due nodi
+            Console.WriteLine("\nRimozione del collegamento tra il Nodo 1 e il Nodo 4...");
+            graph.RemoveEdge(1, 4);
+            graph.Stampa(); // Mostra la matrice aggiornata
+        }
+
         // nella matrice segnero che 00 e nn sono i finali e iniziali quindi 
         // ci saranno n-2 nodi che creero
 

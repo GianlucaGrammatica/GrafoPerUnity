@@ -11,8 +11,9 @@ namespace GrafoPerUnity
         static void Main(string[] args)
         {
             Graph graph = new Graph(15);
-            graph.GenerateMatrix();
-            graph.Stampa();
+            //graph.GenerateMatrix();
+            //graph.Stampa();
+            graph.TestGraph();
             Console.ReadKey();
         }
     }
